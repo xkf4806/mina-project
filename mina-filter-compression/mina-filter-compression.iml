@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="FacetManager">
+    <facet type="Osmorc" name="OSGi">
+      <configuration manifestGenerationMode="OsmorcControlled" manifestLocation="" jarfileLocation="mina-filter-compression-2.0.19.jar" outputPathType="CompilerOutputPath" bndFileLocation="" bundlorFileLocation="" bundleActivator="" bundleSymbolicName="org.apache.mina.filter.compression" bundleVersion="2.0.19" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false" doNotSynchronizeWithMaven="false">
+        <additionalProperties>
+          <property key="Bundle-Description" value="Apache MINA is a network application framework which helps users develop high performance and highly scalable network applications easily.  It provides an abstract event-driven asynchronous API over various transports such as TCP/IP and UDP/IP via Java NIO." />
+          <property key="Bundle-Vendor" value="Apache MINA Project" />
+          <property key="Bundle-DocURL" value="http://mina.apache.org/" />
+          <property key="Export-Package" value="org.apache.mina.filter.compression;version=2.0.19;-noimport:=true" />
+          <property key="Import-Package" value="org.apache.mina.core.buffer;version=2.0.19,org.apache.mina.core.filterchain;version=2.0.19,org.apache.mina.core.session;version=2.0.19,org.apache.mina.core.write;version=2.0.19,org.apache.mina.filter.util;version=2.0.19,com.jcraft.jzlib;version=1.1.3,org.slf4j;version=1.7" />
+          <property key="Bundle-Name" value="Apache MINA Compression Filter" />
+        </additionalProperties>
+        <additionalJARContents />
+      </configuration>
+    </facet>
+  </component>
+</module>

@@ -28,17 +28,15 @@ import org.apache.mina.core.session.IoSession;
 /**
  * The Time Server handler : it return the current date when a message is received,
  * or close the session if the "quit" message is received.
- * 
+ *
  * @author <a href="http://mina.apache.org">Apache MINA Project</a>
  */
-public class TimeServerHandler extends IoHandlerAdapter
-{
+public class TimeServerHandler extends IoHandlerAdapter {
     /**
      * Trap exceptions.
      */
     @Override
-    public void exceptionCaught( IoSession session, Throwable cause ) throws Exception
-    {
+    public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
         cause.printStackTrace();
     }
 
@@ -47,19 +45,22 @@ public class TimeServerHandler extends IoHandlerAdapter
      * we return the current date.
      */
     @Override
-    public void messageReceived( IoSession session, Object message ) throws Exception
-    {
+    public void messageReceived(IoSession session, Object message) throws Exception {
         String str = message.toString();
-        
-        if( str.trim().equalsIgnoreCase("quit") ) {
-            // "Quit" ? let's get out ...
+
+        if (str.trim().equalsIgnoreCase("quit")) {
+            /**
+             * "Quit" ? let's get out ...
+             */
             session.closeNow();
             return;
         }
 
-        // Send the current date back to the client
+        /**
+         * Send the current date back to the client
+         */
         Date date = new Date();
-        session.write( date.toString() );
+        session.write(date.toString());
         System.out.println("Message written...");
     }
 
@@ -67,8 +68,7 @@ public class TimeServerHandler extends IoHandlerAdapter
      * On idle, we just write a message on the console
      */
     @Override
-    public void sessionIdle( IoSession session, IdleStatus status ) throws Exception
-    {
-        System.out.println( "IDLE " + session.getIdleCount( status ));
+    public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
+        System.out.println("IDLE " + session.getIdleCount(status));
     }
 }

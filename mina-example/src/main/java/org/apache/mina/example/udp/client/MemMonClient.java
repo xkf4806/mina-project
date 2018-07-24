@@ -67,6 +67,7 @@ public class MemMonClient extends IoHandlerAdapter {
 
         LOGGER.debug("Adding a future listener.");
         connFuture.addListener(new IoFutureListener<ConnectFuture>() {
+            @Override
             public void operationComplete(ConnectFuture future) {
                 if (future.isConnected()) {
                     LOGGER.debug("...connected");

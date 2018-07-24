@@ -42,7 +42,9 @@ public class AddMessage extends AbstractMessage {
 
     @Override
     public String toString() {
-        // it is a good practice to create toString() method on message classes.
+        /**
+         * it is a good practice to create toString() method on message classes.
+         */
         return getSequence() + ":ADD(" + value + ')';
     }
 }

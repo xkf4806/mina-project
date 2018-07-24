@@ -41,37 +41,57 @@ public class ServerSessionHandler extends IoHandlerAdapter {
     
     @Override
     public void sessionOpened(IoSession session) {
-        // set idle time to 60 seconds
+        /**
+         * set idle time to 60 seconds
+         */
         session.getConfig().setIdleTime(IdleStatus.BOTH_IDLE, 60);
 
-        // initial sum is zero
-        session.setAttribute(SUM_KEY, Integer.valueOf(0));
+        /**
+         * initial sum is zero
+         */
+        session.setAttribute(SUM_KEY, 0);
     }
 
     @Override
     public void messageReceived(IoSession session, Object message) {
-        // client only sends AddMessage. otherwise, we will have to identify
-        // its type using instanceof operator.
+        /**
+         * client only sends AddMessage. otherwise, we will have to identify
+         * its type using instanceof operator.
+         */
         AddMessage am = (AddMessage) message;
 
-        // add the value to the current sum.
-        int sum = ((Integer) session.getAttribute(SUM_KEY)).intValue();
+        /**
+         * add the value to the current sum.
+         */
+        int sum = (Integer) session.getAttribute(SUM_KEY);
         int value = am.getValue();
         long expectedSum = (long) sum + value;
         if (expectedSum > Integer.MAX_VALUE || expectedSum < Integer.MIN_VALUE) {
-            // if the sum overflows or underflows, return error message
+            /**
+             * if the sum overflows or underflows, return error message
+             */
             ResultMessage rm = new ResultMessage();
-            rm.setSequence(am.getSequence()); // copy sequence
+            /**
+             * copy sequence
+             */
+            rm.setSequence(am.getSequence());
             rm.setOk(false);
             session.write(rm);
         } else {
-            // sum up
+            /**
+             * sum up
+             */
             sum = (int) expectedSum;
-            session.setAttribute(SUM_KEY, Integer.valueOf(sum));
+            session.setAttribute(SUM_KEY, sum);
 
-            // return the result message
+            /**
+             * return the result message
+             */
             ResultMessage rm = new ResultMessage();
-            rm.setSequence(am.getSequence()); // copy sequence
+            /**
+             * copy sequence
+             */
+            rm.setSequence(am.getSequence());
             rm.setOk(true);
             rm.setValue(sum);
             session.write(rm);
@@ -81,13 +101,17 @@ public class ServerSessionHandler extends IoHandlerAdapter {
     @Override
     public void sessionIdle(IoSession session, IdleStatus status) {
         LOGGER.info("Disconnecting the idle.");
-        // disconnect an idle client
+        /**
+         * disconnect an idle client
+         */
         session.closeNow();
     }
 
     @Override
     public void exceptionCaught(IoSession session, Throwable cause) {
-        // close the connection on exceptional situation
+        /**
+         * close the connection on exceptional situation
+         */
         session.closeNow();
     }
 }

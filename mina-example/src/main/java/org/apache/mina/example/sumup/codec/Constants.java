@@ -47,6 +47,6 @@ public class Constants {
 
     public static final int RESULT_ERROR = 1;
 
-    private Constants() {
+    public Constants() {
     }
 }

@@ -43,37 +43,60 @@ public abstract class AbstractMessageDecoder implements MessageDecoder {
         this.type = type;
     }
 
+    @Override
     public MessageDecoderResult decodable(IoSession session, IoBuffer in) {
-        // Return NEED_DATA if the whole header is not read yet.
+        /**
+         * Return NEED_DATA if the whole header is not read yet.
+         */
         if (in.remaining() < Constants.HEADER_LEN) {
             return MessageDecoderResult.NEED_DATA;
         }
 
-        // Return OK if type and bodyLength matches.
+        /**
+         * Return OK if type and bodyLength matches.
+         */
         if (type == in.getShort()) {
             return MessageDecoderResult.OK;
         }
 
-        // Return NOT_OK if not matches.
+        /**
+         * Return NOT_OK if not matches.
+         */
         return MessageDecoderResult.NOT_OK;
     }
 
+    @Override
     public MessageDecoderResult decode(IoSession session, IoBuffer in,
-            ProtocolDecoderOutput out) throws Exception {
-        // Try to skip header if not read.
+                                       ProtocolDecoderOutput out) throws Exception {
+        /**
+         * Try to skip header if not read.
+         */
         if (!readHeader) {
-            in.getShort(); // Skip 'type'.
-            sequence = in.getInt(); // Get 'sequence'.
+            /**
+             * Skip 'type'.
+             */
+            in.getShort();
+            /**
+             * Get 'sequence'.
+             */
+            sequence = in.getInt();
             readHeader = true;
         }
 
-        // Try to decode body
+        /**
+         * Try to decode body
+         */
         AbstractMessage m = decodeBody(session, in);
-        // Return NEED_DATA if the body is not fully read.
+        /**
+         * Return NEED_DATA if the body is not fully read.
+         */
         if (m == null) {
             return MessageDecoderResult.NEED_DATA;
         } else {
-            readHeader = false; // reset readHeader for the next decode
+            /**
+             * reset readHeader for the next decode
+             */
+            readHeader = false;
         }
         m.setSequence(sequence);
         out.write(m);
@@ -83,9 +106,9 @@ public abstract class AbstractMessageDecoder implements MessageDecoder {
 
     /**
      * @param session The current session
-     * @param in The incoming buffer
+     * @param in      The incoming buffer
      * @return <tt>null</tt> if the whole body is not read yet
      */
     protected abstract AbstractMessage decodeBody(IoSession session,
-            IoBuffer in);
+                                                  IoBuffer in);
 }

@@ -30,23 +30,31 @@ import org.apache.mina.transport.socket.nio.NioDatagramAcceptor;
 
 /**
  * An UDP server used for performance tests.
- * 
+ * <p>
  * It does nothing fancy, except receiving the messages, and counting the number of
  * received messages.
- * 
+ *
  * @author <a href="http://mina.apache.org">Apache MINA Project</a>
  */
 public class UdpServer extends IoHandlerAdapter {
-    /** The listening port (check that it's not already in use) */
+    /**
+     * The listening port (check that it's not already in use)
+     */
     public static final int PORT = 18567;
 
-    /** The number of message to receive */
+    /**
+     * The number of message to receive
+     */
     public static final int MAX_RECEIVED = 100000;
 
-    /** The starting point, set when we receive the first message */
+    /**
+     * The starting point, set when we receive the first message
+     */
     private static long t0;
 
-    /** A counter incremented for every recieved message */
+    /**
+     * A counter incremented for every recieved message
+     */
     private AtomicInteger nbReceived = new AtomicInteger(0);
 
     /**
@@ -79,7 +87,9 @@ public class UdpServer extends IoHandlerAdapter {
             System.out.println("Received " + nb + " messages");
         }
 
-        // If we want to test the write operation, uncomment this line
+        /**
+         * If we want to test the write operation, uncomment this line
+         */
         session.write(message);
     }
 
@@ -90,7 +100,9 @@ public class UdpServer extends IoHandlerAdapter {
     public void sessionClosed(IoSession session) throws Exception {
         System.out.println("Session closed...");
 
-        // Reinitialize the counter and expose the number of received messages
+        /**
+         * Reinitialize the counter and expose the number of received messages
+         */
         System.out.println("Nb message received : " + nbReceived.get());
         nbReceived.set(0);
     }
@@ -121,7 +133,7 @@ public class UdpServer extends IoHandlerAdapter {
 
     /**
      * Create the UDP server
-     * 
+     *
      * @throws IOException If something went wrong
      */
     public UdpServer() throws IOException {
@@ -139,7 +151,7 @@ public class UdpServer extends IoHandlerAdapter {
 
     /**
      * The entry point.
-     * 
+     *
      * @param args The arguments
      * @throws IOException If something went wrong
      */

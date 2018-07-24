@@ -35,13 +35,17 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 public class Server {
     private static final int SERVER_PORT = 8080;
 
-    // Set this to false to use object serialization instead of custom codec.
+    /**
+     * Set this to false to use object serialization instead of custom codec.
+     */
     private static final boolean USE_CUSTOM_CODEC = true;
 
     public static void main(String[] args) throws Throwable {
         NioSocketAcceptor acceptor = new NioSocketAcceptor();
 
-        // Prepare the service configuration.
+        /**
+         * Prepare the service configuration.
+         */
         if (USE_CUSTOM_CODEC) {
             acceptor.getFilterChain()
                     .addLast(
@@ -51,9 +55,9 @@ public class Server {
         } else {
             acceptor.getFilterChain()
                     .addLast(
-                    "codec",
-                    new ProtocolCodecFilter(
-                            new ObjectSerializationCodecFactory()));
+                            "codec",
+                            new ProtocolCodecFilter(
+                                    new ObjectSerializationCodecFactory()));
         }
         acceptor.getFilterChain().addLast("logger", new LoggingFilter());
 

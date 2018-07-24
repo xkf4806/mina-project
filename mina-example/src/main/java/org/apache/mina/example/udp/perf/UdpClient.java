@@ -30,18 +30,22 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.transport.socket.nio.NioDatagramConnector;
 
 /**
- * An UDP client taht just send thousands of small messages to a UdpServer. 
- * 
+ * An UDP client that just send thousands of small messages to a UdpServer.
+ * <p>
  * This class is used for performance test purposes. It does nothing at all, but send a message
  * repetitly to a server.
- * 
+ *
  * @author <a href="http://mina.apache.org">Apache MINA Project</a>
  */
 public class UdpClient extends IoHandlerAdapter {
-    /** The connector */
+    /**
+     * The connector
+     */
     private IoConnector connector;
 
-    /** The session */
+    /**
+     * The session
+     */
     private static IoSession session;
 
     /**
@@ -110,8 +114,9 @@ public class UdpClient extends IoHandlerAdapter {
     }
 
     /**
-     * The main method : instanciates a client, and send N messages. We sleep 
+     * The main method : instanciates a client, and send N messages. We sleep
      * between each K messages sent, to avoid the server saturation.
+     *
      * @param args The arguments
      * @throws Exception If something went wrong
      */

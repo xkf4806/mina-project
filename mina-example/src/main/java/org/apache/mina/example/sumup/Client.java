@@ -40,9 +40,14 @@ public class Client {
 
     private static final int PORT = 8080;
 
-    private static final long CONNECT_TIMEOUT = 30*1000L; // 30 seconds
+    /**
+     * 连接超时时间：30 seconds
+     */
+    private static final long CONNECT_TIMEOUT = 30 * 1000L;
 
-    // Set this to false to use object serialization instead of custom codec.
+    /**
+     * Set this to false to use object serialization instead of custom codec.
+     */
     private static final boolean USE_CUSTOM_CODEC = true;
 
     public static void main(String[] args) throws Throwable {
@@ -51,7 +56,9 @@ public class Client {
             return;
         }
 
-        // prepare values to sum up
+        /**
+         * prepare values to sum up
+         */
         int[] values = new int[args.length];
         for (int i = 0; i < args.length; i++) {
             values[i] = Integer.parseInt(args[i]);
@@ -59,7 +66,9 @@ public class Client {
 
         NioSocketConnector connector = new NioSocketConnector();
 
-        // Configure the service.
+        /**
+         * Configure the service.
+         */
         connector.setConnectTimeoutMillis(CONNECT_TIMEOUT);
         if (USE_CUSTOM_CODEC) {
             connector.getFilterChain().addLast(
@@ -77,7 +86,7 @@ public class Client {
         connector.setHandler(new ClientSessionHandler(values));
 
         IoSession session;
-        for (;;) {
+        for (; ; ) {
             try {
                 ConnectFuture future = connector.connect(new InetSocketAddress(
                         HOSTNAME, PORT));
@@ -91,9 +100,11 @@ public class Client {
             }
         }
 
-        // wait until the summation is done
+        /**
+         * wait until the summation is done
+         */
         session.getCloseFuture().awaitUninterruptibly();
-        
+
         connector.dispose();
     }
 }

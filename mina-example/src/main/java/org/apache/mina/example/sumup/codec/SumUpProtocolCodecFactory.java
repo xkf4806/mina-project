@@ -36,8 +36,7 @@ public class SumUpProtocolCodecFactory extends DemuxingProtocolCodecFactory {
         if (server) {
             super.addMessageDecoder(AddMessageDecoder.class);
             super.addMessageEncoder(ResultMessage.class, ResultMessageEncoder.class);
-        } else // Client
-        {
+        } else {
             super.addMessageEncoder(AddMessage.class, AddMessageEncoder.class);
             super.addMessageDecoder(ResultMessageDecoder.class);
         }

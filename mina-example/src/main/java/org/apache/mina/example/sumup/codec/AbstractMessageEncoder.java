@@ -38,15 +38,23 @@ public abstract class AbstractMessageEncoder<T extends AbstractMessage> implemen
         this.type = type;
     }
 
+    @Override
     public void encode(IoSession session, T message, ProtocolEncoderOutput out) throws Exception {
         IoBuffer buf = IoBuffer.allocate(16);
-        buf.setAutoExpand(true); // Enable auto-expand for easier encoding
+        /**
+         * Enable auto-expand for easier encoding
+         */
+        buf.setAutoExpand(true);
 
-        // Encode a header
+        /**
+         * Encode a header
+         */
         buf.putShort((short) type);
         buf.putInt(message.getSequence());
 
-        // Encode a body
+        /**
+         * Encode a body
+         */
         encodeBody(session, message, buf);
         buf.flip();
         out.write(buf);

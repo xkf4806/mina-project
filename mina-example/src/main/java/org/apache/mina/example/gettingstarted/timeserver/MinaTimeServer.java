@@ -34,38 +34,50 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
  * A minimal 'time' server, returning the current date. Opening
  * a telnet server, you will get the current date by typing
  * any string followed by a new line.
- * 
+ * <p>
  * In order to quit, just send the 'quit' message.
- * 
+ *
  * @author <a href="http://mina.apache.org">Apache MINA Project</a>
  */
 public class MinaTimeServer {
-    /** We will use a port above 1024 to be able to launch the server with a standard user */
+    /**
+     * We will use a port above 1024 to be able to launch the server with a standard user
+     */
     private static final int PORT = 9123;
 
     /**
-     * The server implementation. It's based on TCP, and uses a logging filter 
+     * The server implementation. It's based on TCP, and uses a logging filter
      * plus a text line decoder.
-     * 
+     *
      * @param args The arguments
      * @throws IOException If something went wrong
      */
     public static void main(String[] args) throws IOException {
-        // Create the acceptor
+        /**
+         * Create the acceptor
+         */
         IoAcceptor acceptor = new NioSocketAcceptor();
-        
-        // Add two filters : a logger and a codec
-        acceptor.getFilterChain().addLast( "logger", new LoggingFilter() );
-        acceptor.getFilterChain().addLast( "codec", new ProtocolCodecFilter( new TextLineCodecFactory( StandardCharsets.UTF_8)));
-   
-        // Attach the business logic to the server
-        acceptor.setHandler( new TimeServerHandler() );
 
-        // Configurate the buffer size and the iddle time
-        acceptor.getSessionConfig().setReadBufferSize( 2048 );
-        acceptor.getSessionConfig().setIdleTime( IdleStatus.BOTH_IDLE, 10 );
-        
-        // And bind !
-        acceptor.bind( new InetSocketAddress(PORT) );
+        /**
+         * Add two filters : a logger and a codec
+         */
+        acceptor.getFilterChain().addLast("logger", new LoggingFilter());
+        acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(StandardCharsets.UTF_8)));
+
+        /**
+         * Attach the business logic to the server
+         */
+        acceptor.setHandler(new TimeServerHandler());
+
+        /**
+         * Configurate the buffer size and the iddle time
+         */
+        acceptor.getSessionConfig().setReadBufferSize(2048);
+        acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);
+
+        /**
+         * And bind !
+         */
+        acceptor.bind(new InetSocketAddress(PORT));
     }
 }

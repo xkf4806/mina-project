@@ -63,6 +63,7 @@ public class ClientPanel extends JPanel {
     public void updateTextField(final long val) {
         System.out.println("New value for textfield - " + val);
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 textField.setText(String.valueOf(val));
             }

@@ -44,7 +44,10 @@ public class ResultMessageDecoder extends AbstractMessageDecoder {
     protected AbstractMessage decodeBody(IoSession session, IoBuffer in) {
         if (!readCode) {
             if (in.remaining() < Constants.RESULT_CODE_LEN) {
-                return null; // Need more data.
+                /**
+                 * Need more data.
+                 */
+                return null;
             }
 
             code = in.getShort();
@@ -69,6 +72,7 @@ public class ResultMessageDecoder extends AbstractMessageDecoder {
         }
     }
 
+    @Override
     public void finishDecode(IoSession session, ProtocolDecoderOutput out)
             throws Exception {
     }
